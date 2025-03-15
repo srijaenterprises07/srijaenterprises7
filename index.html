@@ -147,6 +147,108 @@
                 grid-template-columns: 1fr;
             }
         }
+
+
+/*Image sider*/
+             * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .slider-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 50px auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .caption h2 {
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .controls button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .controls button:hover {
+            background: rgba(255,255,255,0.5);
+        }
+
+        .controls i {
+            color: white;
+            font-size: 2em;
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+            transform: scale(1.2);
+        }   
+        
     </style>
 </head>
 <body>
@@ -166,7 +268,49 @@
 
     <!-- Main Content -->
     <main style="margin-top: 80px;">
-        <!-- Your page content here -->
+
+
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide">
+              
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQgbxQajMlzb4jxTLwEPkZwT7Hp6rxYTsNzE2IGTwpD2_CIeSgQOYXqhk&s=10" alt="Nature">
+                <div class="caption">
+                    <h2>Beautiful Nature</h2>
+                    <p>Discover the wonders of the natural world</p>
+                </div>
+            </div>
+            <div class="slide">
+              
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOUSjaHxunR-srgaXlOTfPOFJD4vZegVrVFJsZKdozhQyOmfuuqwH92jkN&s=10" alt="Mountain">
+                <div class="caption">
+                    <h2>Mountain Views</h2>
+                    <p>Experience the majesty of mountain ranges</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRunZoaTdld6BAcUIeTuawDSnyyfSB4Mko-ulMco_UZ3qk7y46srtNWuaCK&s=10" alt="Ocean">
+                <div class="caption">
+                    <h2>Ocean Depths</h2>
+                    <p>Explore the beauty of marine life</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="dots"></div>
+    </div>
+
+
+
+
+
+
+        
     </main>
 
     <!-- Footer -->
@@ -207,6 +351,94 @@
 
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+        });
+
+        //imag sider
+        
+    <!-- Font Awesome for arrows -->
+    <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
+
+    
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        const dotsContainer = document.querySelector('.dots');
+
+        let currentIndex = 0;
+        let autoPlay = true;
+        let interval = 5000; // 5 seconds
+
+        // Create dots
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        // Navigation functions
+        function goToSlide(index) {
+            currentIndex = index;
+            updateSlider();
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateSlider();
+        }
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        // Auto-play
+        let autoPlayInterval = setInterval(nextSlide, interval);
+
+        // Pause on hover
+        slider.parentElement.addEventListener('mouseenter', () => {
+            clearInterval(autoPlayInterval);
+        });
+
+        slider.parentElement.addEventListener('mouseleave', () => {
+            if (autoPlay) {
+                autoPlayInterval = setInterval(nextSlide, interval);
+            }
+        });
+
+        // Event listeners
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slider.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        slider.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) nextSlide();
+            if (touchStartX - touchEndX < -50) prevSlide();
         });
     </script>
 </body>

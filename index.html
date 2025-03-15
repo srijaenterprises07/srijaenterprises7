@@ -248,6 +248,92 @@
             background: white;
             transform: scale(1.2);
         }   
+        /*Card */
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+
+        /* Grid Container */
+        .grid-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        /* Grid Items */
+        .grid-item {
+            background: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-container {
+                padding: 0 0.5rem;
+            }
+
+            .card-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         
     </style>
 </head>
@@ -306,6 +392,38 @@
     </div>
 
 
+ <div class="grid-container">
+        <div class="grid">
+            <!-- Grid Item 1 -->
+            <article class="grid-item">
+                <img src="image1.jpg" alt="Description" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Professional Service One</h3>
+                    <p class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                </div>
+            </article>
+
+            <!-- Grid Item 2 -->
+            <article class="grid-item">
+                <img src="image2.jpg" alt="Description" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Professional Service Two</h3>
+                    <p class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                </div>
+            </article>
+
+            <!-- Grid Item 3 -->
+            <article class="grid-item">
+                <img src="image3.jpg" alt="Description" class="card-image">
+                <div class="card-content">
+                    <h3 class="card-title">Professional Service Three</h3>
+                    <p class="card-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                </div>
+            </article>
+        </div>
+ </div>
+
+        
 
 
 
